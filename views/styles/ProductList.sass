@@ -1,0 +1,41 @@
+#header
+  //display: flex
+  //justify-content: center
+  //align-items: center
+  display: flex
+  justify-content: space-between
+  align-items: center
+  padding: 10px /* Add padding for spacing */
+  //border-bottom: 1px solid #ccc /* Border at the bottom of the header */
+#header-text
+  flex: 1
+#header-buttons
+  //display: flex
+  //align-items: end
+  display: flex
+#header-buttons button
+  margin-left: 10px /* Add margin between buttons */
+  padding: 8px 16px /* Padding inside the buttons */
+  font-size: 14px /* Font size for buttons */
+  box-shadow: black
+#product-list
+  display: flex
+  //align-items: center
+  flex-wrap: wrap
+  justify-content: space-between
+.product-box
+  //flex: 1 1 25%
+  //box-sizing: border-box
+  //width: 20%
+  //padding: 2.5%
+  //margin: 2.5%
+  //border: 2px solid black
+  //text-align: center
+  flex-basis: calc(20% - 20px) /* 20% of the container width minus spacing */
+  margin-bottom: 20px /* Vertical spacing between items */
+  border: 1px solid #ccc /* Border for item visibility */
+  padding: 10px /* Padding inside each item */
+  text-align: center /* Center-align text */
+.delete-checkbox
+  display: flex
+  align-self: start

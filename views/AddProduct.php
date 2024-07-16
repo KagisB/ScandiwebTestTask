@@ -58,49 +58,12 @@ $productRepository->saveProduct();*/
         </select>
     </div>
     <!--- Input, kurš atbilst tipam, ko izvēlējās---->
-    <div id="special-value" class="form-group">
-
+    <div id="special-value">
 
     </div>
 </form>
 </div>
-<!---
-<div id="DVD">
-    <label for="size">
-        Size(MB)
-    </label>
-    <input type="number" id="size" step="any">
-    <p>Please provide the size of the DVD in MB</p>
-</div>
-<div id="Book">
-    <label for="weight">
-        Weight(KG)
-    </label>
-    <input type="number" id="weight" step="any">
-    <p>Please provide the weight of the Book in KG</p>
-</div>
-<div id="Furniture">
-    <div class="form-group">
-        <label for="height">
-            Height(CM)
-        </label>
-        <input type="number" id="height" step="any">
-    </div>
-    <div class="form-group">
-        <label for="width">
-            Width(CM)
-        </label>
-        <input type="number" id="width" step="any">
-    </div>
-    <div class="form-group">
-        <label for="length">
-            Length(CM)
-        </label>
-        <input type="number" id="length" step="any">
-    </div>
-    <p>Please provide dimensions in HxWxL format</p>
-</div>
-</body>--->
+</body>
 
 <script>
 
@@ -132,24 +95,25 @@ $productRepository->saveProduct();*/
             type : type,
             value : specialValue,
         };
-        console.log(product);
 
+        //Check if all the data is saved before moving to saving the product.
+        if(product.sku && product.name && product.price && product.type && product.value){
+            let xhr = new XMLHttpRequest();
+            xhr.open('POST', '../app/Router.php?action=save', true);
+            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 
-        let xhr = new XMLHttpRequest();
-        xhr.open('POST', '../app/Router.php?action=save', true);
-        xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    //const response = JSON.parse(xhr.responseText);
+                    //console.log('Success:', response);
+                    window.location.href="ProductList.php";
+                } else if (xhr.readyState === 4) {
+                    console.error('Error:', xhr.status, xhr.statusText);
+                }
+            };
 
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                //const response = JSON.parse(xhr.responseText);
-                //console.log('Success:', response);
-                window.location.href="ProductList.php";
-            } else if (xhr.readyState === 4) {
-                console.error('Error:', xhr.status, xhr.statusText);
-            }
-        };
-
-        xhr.send(JSON.stringify(product));
+            xhr.send(JSON.stringify(product));
+        }
     }
 
     function updateLayoutForDVD() {
@@ -159,6 +123,7 @@ $productRepository->saveProduct();*/
 
         let dvdDiv = document.createElement('div');
         dvdDiv.id = 'DVD';
+        dvdDiv.className='form-group';
 
         let dvdLabel = document.createElement('label');
         dvdLabel.setAttribute('for', 'size');
@@ -174,9 +139,10 @@ $productRepository->saveProduct();*/
 
         dvdDiv.appendChild(dvdLabel);
         dvdDiv.appendChild(dvdInput);
-        dvdDiv.appendChild(dvdParagraph);
+        //dvdDiv.appendChild(dvdParagraph);
 
         inputField.appendChild(dvdDiv);
+        inputField.appendChild(dvdParagraph)
     }
 
     function updateLayoutForBook() {
@@ -186,6 +152,7 @@ $productRepository->saveProduct();*/
 
         let bookDiv = document.createElement('div');
         bookDiv.id = 'Book';
+        bookDiv.className='form-group';
 
         let bookLabel = document.createElement('label');
         bookLabel.setAttribute('for', 'weight');
@@ -201,9 +168,10 @@ $productRepository->saveProduct();*/
 
         bookDiv.appendChild(bookLabel);
         bookDiv.appendChild(bookInput);
-        bookDiv.appendChild(bookParagraph);
+        //bookDiv.appendChild(bookParagraph);
 
         inputField.appendChild(bookDiv);
+        inputField.appendChild(bookParagraph);
     }
 
     function updateLayoutForFurniture() {
@@ -213,6 +181,7 @@ $productRepository->saveProduct();*/
 
         const furnitureDiv = document.createElement('div');
         furnitureDiv.id = 'Furniture';
+        //furnitureDiv.className='form-group';
 
         const heightFormGroup = document.createElement('div');
         heightFormGroup.classList.add('form-group');
@@ -265,9 +234,10 @@ $productRepository->saveProduct();*/
         furnitureDiv.appendChild(heightFormGroup);
         furnitureDiv.appendChild(widthFormGroup);
         furnitureDiv.appendChild(lengthFormGroup);
-        furnitureDiv.appendChild(dimensionsParagraph);
+        //furnitureDiv.appendChild(dimensionsParagraph);
 
         inputField.appendChild(furnitureDiv);
+        inputField.appendChild(dimensionsParagraph);
     }
 
     const layoutUpdateMap = {
@@ -304,7 +274,8 @@ $productRepository->saveProduct();*/
         const updateFunction = layoutUpdateMap[productType];
         if (updateFunction) {
             let inputField = document.getElementById('special-value');
-            inputField.removeChild(inputField.firstChild);
+            //inputField.removeChild(inputField.firstChild);
+            inputField.innerHTML = '';
             updateFunction();
         } else {
             console.log("Unknown product type: " + productType);

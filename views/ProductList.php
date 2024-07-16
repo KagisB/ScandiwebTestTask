@@ -14,6 +14,7 @@ $productList = $productRepository->getAllProducts();
 ?>
 <head>
     <title>Product List</title>
+    <link rel="stylesheet" href="styles/ProductList.css">
 </head>
 <body>
 
