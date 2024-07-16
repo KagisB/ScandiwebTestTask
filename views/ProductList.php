@@ -2,15 +2,13 @@
 require __DIR__ . '/../vendor/autoload.php';
 use App\Repositories\ProductRepository;
 
-ini_set('display_errors', 1);
+/*ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+error_reporting(E_ALL);*/
 
 $productRepository = new ProductRepository("localhost","root","","scandiwebtask",3306);
 $productList = $productRepository->getAllProducts();
-/*foreach($productList as $product){
-    echo($product->displayProduct());
-}*/
+
 ?>
 <head>
     <title>Product List</title>
@@ -24,34 +22,22 @@ $productList = $productRepository->getAllProducts();
         Product List
     </div>
     <div id="header-buttons">
-        <button id="add-product-btn"> <!-- Move user to add product page--->
+        <button id="add-product-btn">
             ADD
         </button>
-        <button id="delete-product-btn"> <!---- On click - collect all inputs, where button has been pressed for delete, and delete those products--->
+        <button id="delete-product-btn">
             MASS DELETE
         </button>
     </div>
 </div>
 <hr>
-<div id="product-list"><!-- Should have flex, 4 boxes per column--->
+<div id="product-list">
 
 </div>
 
 </body>
 
-
-<!--- How does the div for each product look
-<div id="productX" class="product-box">
-    <input type="checkbox" id="delete-button-X" class="delete-checkbox">
-    <input type="hidden" id="productID" value="">
-    <p>SKU</p>
-    <p>Name</p>
-    <p>Price</p>
-    <p>Product specific value(size,weight,dimensions)</p>
-</div>---->
 <script>
-
-    //document.getElementById('add-product-btn').addEventListener('onclick', redirectToAddProduct);
 
     document.getElementById('add-product-btn').onclick = function(){
         console.log('redirect');
@@ -105,24 +91,22 @@ $productList = $productRepository->getAllProducts();
     }
 
     function deleteProducts(){
-        //Collect ids of divs that have
         let productBoxes = document.querySelectorAll('.product-box');
         let selectedIds = [];
-        //console.log(productBoxes);
+
         productBoxes.forEach(box => {
-            // Get the checkbox within the current div
+
             let checkbox = box.querySelector('.delete-checkbox');
 
-            // Check if the checkbox is checked
             if (checkbox && checkbox.checked) {
-                // Get the hidden input within the current div
+
                 let hiddenInput = box.querySelector('#productID');
                 if (hiddenInput) {
                     selectedIds.push(hiddenInput.value);
                 }
             }
         });
-        //console.log(selectedIds);
+
         if(selectedIds.length !== 0){
             let xhr = new XMLHttpRequest();
             xhr.open('POST', '../app/Router.php?action=delete', true);
@@ -130,8 +114,6 @@ $productList = $productRepository->getAllProducts();
 
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    //const response = JSON.parse(xhr.responseText);
-                    //console.log('Success:');
                     location.reload();
                 } else if (xhr.readyState === 4) {
                     console.error('Error:', xhr.status, xhr.statusText);
@@ -143,13 +125,11 @@ $productList = $productRepository->getAllProducts();
     }
 
     let products = <?php echo json_encode($productList); ?>;
-    //let products = <?php //echo json_encode($productListRaw); ?>;
+
     for(let product of products){
-        //console.log(product);
         createProductDiv(product);
     }
-    //console.log(products);
-    //console.log(products[0].id);
+
 </script>
 <?php
 

@@ -1,11 +1,4 @@
 <?php
-/*require __DIR__ . '/../vendor/autoload.php';
-use App\Repositories\ProductRepository;
-
-$productRepository = new ProductRepository("localhost","root","","scandiwebtask",3306);
-
-$productRepository->saveProduct();*/
-
 
 ?>
 <head>
@@ -18,7 +11,7 @@ $productRepository->saveProduct();*/
         Product Add
     </div>
     <div id="header-buttons">
-        <button id="save-product-btn"> <!--On click - submit form, after checking values. --->
+        <button id="save-product-btn">
             Save
         </button>
         <button id="cancel-product-btn">
@@ -67,13 +60,10 @@ $productRepository->saveProduct();*/
 
 <script>
 
-    //document.getElementById("save-product-btn").addEventListener('click', addProduct);
     document.getElementById("save-product-btn").addEventListener('click', function(){
-        //document.getElementById("product_form").submit();
         addProduct();
     });
     document.getElementById("cancel-product-btn").addEventListener('click', function(){
-        //document.getElementById("product_form").submit();
         window.location.href="ProductList.php";
     });
 
@@ -100,7 +90,6 @@ $productRepository->saveProduct();*/
             value : specialValue,
         };
 
-        //Check if all the data is saved before moving to saving the product.
         if(product.sku && product.name && product.price && product.type && product.value){
             let xhr = new XMLHttpRequest();
             xhr.open('POST', '../app/Router.php?action=save', true);
@@ -108,8 +97,6 @@ $productRepository->saveProduct();*/
 
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    //const response = JSON.parse(xhr.responseText);
-                    //console.log('Success:', response);
                     window.location.href="ProductList.php";
                 } else if (xhr.readyState === 4) {
                     console.error('Error:', xhr.status, xhr.statusText);
@@ -121,9 +108,7 @@ $productRepository->saveProduct();*/
     }
 
     function updateLayoutForDVD() {
-        //console.log("Updating layout for DVD");
         let inputField = document.getElementById('special-value');
-        //inputField.removeChild(inputField.firstChild);
 
         let dvdDiv = document.createElement('div');
         dvdDiv.id = 'DVD';
@@ -143,16 +128,13 @@ $productRepository->saveProduct();*/
 
         dvdDiv.appendChild(dvdLabel);
         dvdDiv.appendChild(dvdInput);
-        //dvdDiv.appendChild(dvdParagraph);
 
         inputField.appendChild(dvdDiv);
         inputField.appendChild(dvdParagraph)
     }
 
     function updateLayoutForBook() {
-        //console.log("Updating layout for Book");
-        let inputField = document.getElementById('special-value');
-        //inputField.removeChild(inputField.firstChild);
+        let inputField = document.getElementById('special-value');;
 
         let bookDiv = document.createElement('div');
         bookDiv.id = 'Book';
@@ -172,20 +154,16 @@ $productRepository->saveProduct();*/
 
         bookDiv.appendChild(bookLabel);
         bookDiv.appendChild(bookInput);
-        //bookDiv.appendChild(bookParagraph);
 
         inputField.appendChild(bookDiv);
         inputField.appendChild(bookParagraph);
     }
 
     function updateLayoutForFurniture() {
-        //console.log("Updating layout for Furniture");
         let inputField = document.getElementById('special-value');
-        //inputField.removeChild(inputField.firstChild);
 
         const furnitureDiv = document.createElement('div');
         furnitureDiv.id = 'Furniture';
-        //furnitureDiv.className='form-group';
 
         const heightFormGroup = document.createElement('div');
         heightFormGroup.classList.add('form-group');
@@ -238,7 +216,6 @@ $productRepository->saveProduct();*/
         furnitureDiv.appendChild(heightFormGroup);
         furnitureDiv.appendChild(widthFormGroup);
         furnitureDiv.appendChild(lengthFormGroup);
-        //furnitureDiv.appendChild(dimensionsParagraph);
 
         inputField.appendChild(furnitureDiv);
         inputField.appendChild(dimensionsParagraph);
@@ -255,30 +232,11 @@ $productRepository->saveProduct();*/
     });
     document.getElementById("productType").addEventListener('change',updateLayout);
 
-
-
-    /*document.getElementById("productType").onchange = function (){
-        //console.log('valueChanged');
-        let productType = document.getElementById("productType").value;
-        //console.log(productType);
-        let updateFunction = layoutUpdateMap[productType];
-        //console.log(updateFunction);
-        if (updateFunction) {
-            let inputField = document.getElementById('special-value');
-            //console.log(inputField.firstChild);
-            inputField.removeChild(inputField.firstChild);
-            updateFunction();
-        } else {
-            console.log("Unknown product type: " + productType);
-        }
-    };*/
-
     function updateLayout() {
         let productType = document.getElementById("productType").value;
         const updateFunction = layoutUpdateMap[productType];
         if (updateFunction) {
             let inputField = document.getElementById('special-value');
-            //inputField.removeChild(inputField.firstChild);
             inputField.innerHTML = '';
             updateFunction();
         } else {

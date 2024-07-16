@@ -8,7 +8,6 @@ class Book extends Product
 
     public function __construct($sku, $name, $price, $type, $value)
     {
-        //parent::__construct($id, $sku, $name, $price, $type);
         parent::__construct($sku, $name, $price, $type);
         $this->setWeight($value);
     }
@@ -58,12 +57,10 @@ class Book extends Product
         $stmt->execute();
 
         if (!$this->getId()) {
-            // If it's a new product, set the ID after insertion
             $this->setId($conn->insert_id);
         }
 
         $stmt->close();
-        //$conn->close();
     }
 
 

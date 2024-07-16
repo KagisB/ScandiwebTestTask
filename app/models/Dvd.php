@@ -10,7 +10,6 @@ class Dvd extends Product
 
     public function __construct($sku, $name, $price, $type, $value)
     {
-        //parent::__construct($id, $sku, $name, $price, $type);
         parent::__construct($sku, $name, $price, $type);
         $this->setSize($value);
     }
@@ -48,11 +47,9 @@ class Dvd extends Product
         $result = $stmt1->get_result();
 
         if ($result->fetch_assoc()) {
-            // Update existing product
             $stmt = $conn->prepare("UPDATE products SET name = ?, price = ?, type = ?, value = ? WHERE sku = ?");
             $stmt->bind_param('sdsds', $name, $price, $type, $size, $sku);
         } else {
-            // Insert new product
             $stmt = $conn->prepare("INSERT INTO products (sku, name, price, type, value) VALUES (?, ?, ?, ?, ?)");
             $stmt->bind_param('ssdss',$sku, $name, $price, $type, $size);
         }
@@ -60,12 +57,10 @@ class Dvd extends Product
         $stmt->execute();
 
         if (!$this->getId()) {
-            // If it's a new product, set the ID after insertion
             $this->setId($conn->insert_id);
         }
 
         $stmt->close();
-        //$conn->close();
     }
 
 
