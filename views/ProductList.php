@@ -25,10 +25,10 @@ $productList = $productRepository->getAllProducts();
     </div>
     <div id="header-buttons">
         <button id="add-product-btn"> <!-- Move user to add product page--->
-            Add
+            ADD
         </button>
         <button id="delete-product-btn"> <!---- On click - collect all inputs, where button has been pressed for delete, and delete those products--->
-            Mass delete
+            MASS DELETE
         </button>
     </div>
 </div>
@@ -123,7 +123,7 @@ $productList = $productRepository->getAllProducts();
             }
         });
         //console.log(selectedIds);
-        if(selectedIds !== []){
+        if(selectedIds.length !== 0){
             let xhr = new XMLHttpRequest();
             xhr.open('POST', '../app/Router.php?action=delete', true);
             xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');

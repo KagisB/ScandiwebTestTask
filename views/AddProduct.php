@@ -72,6 +72,10 @@ $productRepository->saveProduct();*/
         //document.getElementById("product_form").submit();
         addProduct();
     });
+    document.getElementById("cancel-product-btn").addEventListener('click', function(){
+        //document.getElementById("product_form").submit();
+        window.location.href="ProductList.php";
+    });
 
     function addProduct(){
         let type = document.getElementById("productType").value;
